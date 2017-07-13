@@ -1,0 +1,337 @@
+DELETE completions
+
+PUT completions
+
+POST completions/_close
+
+PUT completions/_settings
+{
+  "analysis": {
+    "analyzer": {
+      "normal": {
+        "filter": [
+          "standard",
+          "lowercase",
+          "unique"
+        ],
+        "tokenizer": "standard",
+        "type": "custom"
+      },
+      "cologne": {
+        "filter": [
+          "standard",
+          "lowercase",
+          "phonetic_cologne",
+          "unique"
+        ],
+        "tokenizer": "standard",
+        "type": "custom"
+      },
+      "soundex": {
+        "filter": [
+          "standard",
+          "lowercase",
+          "unique",
+          "phonetic_soundex"
+        ],
+        "tokenizer": "standard",
+        "type": "custom"
+      },
+      "metaphone": {
+        "filter": [
+          "standard",
+          "lowercase",
+          "unique",
+          "phonetic_metaphone"
+        ],
+        "tokenizer": "standard",
+        "type": "custom"
+      },
+      "doublemetaphone": {
+        "filter": [
+          "standard",
+          "lowercase",
+          "unique",
+          "phonetic_doublemetaphone"
+        ],
+        "tokenizer": "standard",
+        "type": "custom"
+      }
+    },
+    "filter": {
+      "phonetic_cologne": {
+        "encoder": "cologne",
+        "replace": false,
+        "type": "phonetic"
+      },
+      "phonetic_soundex": {
+        "encoder": "soundex",
+        "replace": false,
+        "type": "phonetic"
+      },
+      "phonetic_metaphone": {
+        "encoder": "metaphone",
+        "replace": false,
+        "type": "phonetic"
+      },
+      "phonetic_doublemetaphone": {
+        "encoder": "doublemetaphone",
+        "replace": false,
+        "type": "phonetic"
+      }
+    }
+  }
+}
+
+PUT completions/city/_mapping
+{
+  "properties": {
+    "suggestion.cologne": {
+      "type": "completion",
+      "analyzer": "cologne",
+      "contexts": [{
+          "name": "organizer",
+          "type": "category",
+          "path": "operator"
+        }],
+      "preserve_position_increments": false,
+      "preserve_separators": false
+    },
+    "suggestion.normal": {
+      "type": "completion",
+      "analyzer": "normal",
+      "contexts": [{
+          "name": "organizer",
+          "type": "category",
+          "path": "operator"
+        }],
+      "preserve_position_increments": false,
+      "preserve_separators": false
+    },
+    "suggestion.soundex": {
+      "type": "completion",
+      "analyzer": "soundex",
+      "contexts": [{
+          "name": "organizer",
+          "type": "category",
+          "path": "operator"
+        }],
+      "preserve_position_increments": false,
+      "preserve_separators": false
+    },
+    "suggestion.metaphone": {
+      "type": "completion",
+      "analyzer": "metaphone",
+      "contexts": [{
+          "name": "organizer",
+          "type": "category",
+          "path": "operator"
+        }],
+      "preserve_position_increments": false,
+      "preserve_separators": false
+    },
+    "suggestion.doublemetaphone": {
+      "type": "completion",
+      "analyzer": "doublemetaphone",
+      "contexts": [{
+          "name": "organizer",
+          "type": "category",
+          "path": "operator"
+        }],
+      "preserve_position_increments": false,
+      "preserve_separators": false
+    }
+  }
+}
+
+POST completions/_open
+
+# Kairo, Cairo, quiro
+POST completions/_analyze
+{
+  "text": ["Kairo", "kairo", "Cairo", "cairo", "Qairo"],
+  "analyzer": "normal"
+}
+
+POST completions/_analyze
+{
+  "text": ["Kairo", "kairo", "Cairo", "cairo", "Qairo"],
+  "analyzer": "cologne"
+}
+
+POST completions/_analyze
+{
+  "text": ["Kairo", "kairo", "Cairo", "cairo", "Qairo"],
+  "analyzer": "soundex"
+}
+
+POST completions/_analyze
+{
+  "text": ["Kairo", "kairo", "Cairo", "cairo", "Qairo"],
+  "analyzer": "metaphone"
+}
+
+POST completions/_analyze
+{
+  "text": ["Kairo", "kairo", "Cairo", "cairo", "Qairo"],
+  "analyzer": "doublemetaphone"
+}
+
+
+# Koln, Köln
+POST completions/_analyze
+{
+  "text": ["Koln", "Köln"],
+  "analyzer": "normal"
+}
+
+POST completions/_analyze
+{
+  "text": ["Koln", "Köln"],
+  "analyzer": "cologne"
+}
+
+POST completions/_analyze
+{
+  "text": ["Koln", "Köln"],
+  "analyzer": "soundex"
+}
+
+POST completions/_analyze
+{
+  "text": ["Koln", "Köln"],
+  "analyzer": "metaphone"
+}
+
+POST completions/_analyze
+{
+  "text": ["Koln", "Köln"],
+  "analyzer": "doublemetaphone"
+}
+
+# Paris, Biarritz
+
+POST completions/_analyze
+{
+  "text": ["Paris", "paris", "Biarritz", "biarritz"],
+  "analyzer": "normal"
+}
+
+POST completions/_analyze
+{
+  "text": ["Paris", "paris", "Biarritz", "biarritz"],
+  "analyzer": "cologne"
+}
+
+POST completions/_analyze
+{
+  "text": ["Paris", "paris", "Biarritz", "biarritz"],
+  "analyzer": "soundex"
+}
+
+POST completions/_analyze
+{
+  "text": ["Paris", "paris", "Biarritz", "biarritz"],
+  "analyzer": "metaphone"
+}
+
+POST completions/_analyze
+{
+  "text": ["Paris", "paris", "Biarritz", "biarritz"],
+  "analyzer": "doublemetaphone"
+}
+
+# Berlin, Paralimni
+
+POST completions/_analyze
+{
+  "text": ["Berlin", "berlin", "Paralimni", "paralimni"],
+  "analyzer": "normal"
+}
+
+POST completions/_analyze
+{
+  "text": ["Berlin", "berlin", "Paralimni", "paralimni"],
+  "analyzer": "cologne"
+}
+
+POST completions/_analyze
+{
+  "text": ["Berlin", "berlin", "Paralimni", "paralimni"],
+  "analyzer": "soundex"
+}
+
+POST completions/_analyze
+{
+  "text": ["Berlin", "berlin", "Paralimni", "paralimni"],
+  "analyzer": "metaphone"
+}
+
+POST completions/_analyze
+{
+  "text": ["Berlin", "berlin", "Paralimni", "paralimni"],
+  "analyzer": "doublemetaphone"
+}
+
+
+# add data with weight
+PUT completions/_bulk
+{"index":{"_type":"city","_id":"57810"}}
+{"operator":"BIG","suggestion.normal":{"input":["berlin"],"weight":10},"suggestion.soundex":{"input":["berlin"],"weight":10},"suggestion.cologne":{"input":["berlin"],"weight":10},"name":"Berlin","hotelcount":"1132","suggestion.metaphone":{"input":["berlin"],"weight":10},"suggestion.doublemetaphone":{"input":["berlin"],"weight":10}}
+{"index":{"_type":"city","_id":"57811"}}
+{"operator":"NER","suggestion.normal":{"input":["berlin"],"weight":10},"suggestion.soundex":{"input":["berlin"],"weight":10},"suggestion.cologne":{"input":["berlin"],"weight":10},"name":"Berlin","hotelcount":"1132","suggestion.metaphone":{"input":["berlin"],"weight":10},"suggestion.doublemetaphone":{"input":["berlin"],"weight":10}}
+{"index":{"_type":"city","_id":"39432"}}
+{"operator":"BIG","suggestion.normal":{"input":["biarritz"]},"suggestion.soundex":{"input":["biarritz"]},"suggestion.cologne":{"input":["biarritz"]},"name":"Biarritz","hotelcount":"59","suggestion.metaphone":{"input":["biarritz"]},"suggestion.doublemetaphone":{"input":["biarritz"]}}
+{"index":{"_type":"city","_id":"39433"}}
+{"operator":"NER","suggestion.normal":{"input":["biarritz"]},"suggestion.soundex":{"input":["biarritz"]},"suggestion.cologne":{"input":["biarritz"]},"name":"Biarritz","hotelcount":"59","suggestion.metaphone":{"input":["biarritz"]},"suggestion.doublemetaphone":{"input":["biarritz"]}}
+{"index":{"_type":"city","_id":"63475"}}
+{"operator":"BIG","suggestion.normal":{"input":["kairo"],"weight":10},"suggestion.soundex":{"input":["kairo"],"weight":10},"suggestion.cologne":{"input":["kairo"],"weight":10},"name":"Kairo","hotelcount":"211","suggestion.metaphone":{"input":["kairo"],"weight":10},"suggestion.doublemetaphone":{"input":["kairo"],"weight":10}}
+{"index":{"_type":"city","_id":"63476"}}
+{"operator":"NER","suggestion.normal":{"input":["kairo"],"weight":10},"suggestion.soundex":{"input":["kairo"],"weight":10},"suggestion.cologne":{"input":["kairo"],"weight":10},"name":"Kairo","hotelcount":"211","suggestion.metaphone":{"input":["kairo"],"weight":10},"suggestion.doublemetaphone":{"input":["kairo"],"weight":10}}
+{"index":{"_type":"city","_id":"44557"}}
+{"operator":"BIG","suggestion.normal":{"input":["köln","k ln"],"weight":10},"suggestion.soundex":{"input":["köln","k ln"],"weight":10},"suggestion.cologne":{"input":["köln","k ln"],"weight":10},"name":"Köln","hotelcount":"338","suggestion.metaphone":{"input":["köln","k ln"],"weight":10},"suggestion.doublemetaphone":{"input":["köln","k ln"],"weight":10}}
+{"index":{"_type":"city","_id":"44558"}}
+{"operator":"NER","suggestion.normal":{"input":["köln","k ln"],"weight":10},"suggestion.soundex":{"input":["köln","k ln"],"weight":10},"suggestion.cologne":{"input":["köln","k ln"],"weight":10},"name":"Köln","hotelcount":"338","suggestion.metaphone":{"input":["köln","k ln"],"weight":10},"suggestion.doublemetaphone":{"input":["köln","k ln"],"weight":10}}
+{"index":{"_type":"city","_id":"43584"}}
+{"operator":"BIG","suggestion.normal":{"input":["paralimni"],"weight":5},"suggestion.soundex":{"input":["paralimni"],"weight":5},"suggestion.cologne":{"input":["paralimni"],"weight":5},"name":"Paralimni","hotelcount":"13","suggestion.metaphone":{"input":["paralimni"],"weight":5},"suggestion.doublemetaphone":{"input":["paralimni"],"weight":5}}
+{"index":{"_type":"city","_id":"43585"}}
+{"operator":"NER","suggestion.normal":{"input":["paralimni"],"weight":5},"suggestion.soundex":{"input":["paralimni"],"weight":5},"suggestion.cologne":{"input":["paralimni"],"weight":5},"name":"Paralimni","hotelcount":"13","suggestion.metaphone":{"input":["paralimni"],"weight":5},"suggestion.doublemetaphone":{"input":["paralimni"],"weight":5}}
+{"index":{"_type":"city","_id":"22396"}}
+{"operator":"BIG","suggestion.normal":{"input":["paris"],"weight":10},"suggestion.soundex":{"input":["paris"],"weight":10},"suggestion.cologne":{"input":["paris"],"weight":10},"name":"Paris","hotelcount":"1745","suggestion.metaphone":{"input":["paris"],"weight":10},"suggestion.doublemetaphone":{"input":["paris"],"weight":10}}
+{"index":{"_type":"city","_id":"22397"}}
+{"operator":"NER","suggestion.normal":{"input":["paris"],"weight":10},"suggestion.soundex":{"input":["paris"],"weight":10},"suggestion.cologne":{"input":["paris"],"weight":10},"name":"Paris","hotelcount":"1745","suggestion.metaphone":{"input":["paris"],"weight":10},"suggestion.doublemetaphone":{"input":["paris"],"weight":10}}
+
+
+POST completions/_search?pretty
+{
+   "_source":["operator", "name", "hotelcount"],
+   "suggest":{
+      "results":{
+         "text":"paris",
+         "completion":{
+            "field":"suggestion.cologne",
+            "size":1000,
+            "contexts":{
+               "organizer": ["BIG","NER"]
+            }
+         }
+      }
+   }
+}
+
+POST completions/_search?pretty
+{
+   "_source":["operator", "name", "hotelcount"],
+   "suggest":{
+      "results":{
+         "text":"paris",
+         "completion":{
+            "field":"suggestion.metaphone",
+            "size":1000,
+            "contexts":{
+               "organizer": ["BIG","NER"]
+            }
+         }
+      }
+   }
+}
